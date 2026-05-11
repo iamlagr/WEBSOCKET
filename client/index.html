@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat WebSocket</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ── TELA 1: LOGIN / REGISTRO ── -->
+    <div id="screen-auth" class="screen active">
+      <div class="auth-box">
+        <h1>💬 ChatWS</h1>
+        <p class="subtitle">Chat em Tempo Real com WebSocket</p>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="login">Entrar</button>
+          <button class="tab" data-tab="register">Cadastrar</button>
+        </div>
+
+        <!-- Login -->
+        <div id="tab-login" class="tab-content active">
+          <input type="text" id="login-username" placeholder="Usuário" />
+          <input type="password" id="login-password" placeholder="Senha" />
+          <button id="btn-login" class="btn-primary">Entrar</button>
+        </div>
+
+        <!-- Registro -->
+        <div id="tab-register" class="tab-content">
+          <input type="text" id="reg-username" placeholder="Usuário" />
+          <input type="password" id="reg-password" placeholder="Senha" />
+          <button id="btn-register" class="btn-primary">Cadastrar</button>
+        </div>
+
+        <div id="auth-status" class="status-msg"></div>
+
+        <div class="server-config">
+          <label>🔌 Servidor:</label>
+          <input
+            type="text"
+            id="server-url"
+            value="http://localhost:3000"
+            placeholder="http://localhost:3000"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TELA 2: DASHBOARD (SALAS) ── -->
+    <div id="screen-dashboard" class="screen">
+      <div class="dashboard">
+        <header class="dash-header">
+          <h2>💬 ChatWS</h2>
+          <span id="dash-username" class="user-badge"></span>
+          <button id="btn-logout" class="btn-danger-sm">Sair</button>
+        </header>
+
+        <div class="dash-body">
+          <div class="create-room-box">
+            <h3>Criar nova sala</h3>
+            <div class="input-row">
+              <input type="text" id="new-room-name" placeholder="Nome da sala..." />
+              <button id="btn-create-room" class="btn-primary">Criar</button>
+            </div>
+          </div>
+
+          <div class="rooms-section">
+            <h3>Salas disponíveis</h3>
+            <div id="rooms-list" class="rooms-list">
+              <p class="empty-state">Nenhuma sala criada ainda.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TELA 3: SALA DE CHAT ── -->
+    <div id="screen-chat" class="screen">
+      <div class="chat-layout">
+        <!-- Sidebar: usuários online -->
+        <aside class="chat-sidebar">
+          <div class="sidebar-header">
+            <h3 id="current-room-name">Sala</h3>
+            <button id="btn-leave-room" class="btn-danger-sm">Sair</button>
+          </div>
+
+          <div class="users-section">
+            <h4>Online</h4>
+            <div id="users-list" class="users-list"></div>
+          </div>
+
+          <div class="target-section">
+            <h4>Enviar para:</h4>
+            <label class="radio-label">
+              <input type="radio" name="send-mode" value="all" checked />
+              <span>📢 Todos</span>
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="send-mode" value="selected" />
+              <span>🎯 Selecionados</span>
+            </label>
+            <div id="selected-users-list" class="selected-users hidden"></div>
+          </div>
+        </aside>
+
+        <!-- Área principal: mensagens -->
+        <main class="chat-main">
+          <div id="messages" class="messages"></div>
+
+          <div class="input-area">
+            <input
+              type="text"
+              id="msg-input"
+              placeholder="Digite sua mensagem..."
+              autocomplete="off"
+            />
+            <button id="btn-send" class="btn-primary">Enviar</button>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Socket.io client (carregado do servidor) -->
+    <script id="socket-script"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
